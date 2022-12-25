@@ -6,7 +6,7 @@
                     <h5>Your activity</h5>
                     <v-spacer></v-spacer>
                     <v-btn color="teal" rounded dark depressed>Week</v-btn>
-                    <v-btn text>Mounth</v-btn>
+                    <v-btn text>Month</v-btn>
                   </v-app-bar>
                   <v-progress-circular rotate="360" size="100" width="15" value="50" color="teal"
                     class="mt-n5 ml-5 mb-2">
