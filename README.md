@@ -1,4 +1,4 @@
-# dentist
+# Health Tracker front end Application
 
 ## Project setup
 ```
