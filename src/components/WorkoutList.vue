@@ -176,12 +176,14 @@ import WorkoutSessionDataService from '../service/workoutsession'
       desserts: [],
       editedIndex: -1,
       editedItem: {
+        id:'',
         name: '',
         description:'',
         duration:'',
         mincalories:''
       },
       defaultItem: {
+        id:'',
         name: '',
         description:'',
         duration:'',
@@ -234,22 +236,24 @@ import WorkoutSessionDataService from '../service/workoutsession'
       deleteItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
-        // this.dialogDelete = true
-        this.dialogWorkout=true
+        
+        // this.dialogWorkout=true
         WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id")).then(response => {
         console.log("local ", localStorage.getItem("id"))
-    console.log(response)
+    console.log("this edited item:::",this.editedItem.id)
         response.data.forEach(session => {
              if(session.workoutId==this.editedItem.id){
+              console.log("in user>>>>>>")
               this.dialogWorkout=true
              }
-             else{
-              this.dialogWorkout=true
-             }
+            else{
+              this.dialogDelete=true
+            }
           
        });
       
       })
+      
       },
   
       async deleteItemConfirm () {
@@ -277,11 +281,12 @@ import WorkoutSessionDataService from '../service/workoutsession'
       },
       closeworkout () {
         this.dialogWorkout = false
-        
+        this.dialogDelete=false
       },
   
       async save () {
-        if(typeof(this.editedItem.id)=='undefined'){
+        var responseData =[]
+        if(typeof(this.editedItem.id)=='undefined'|| this.editedItem.id==''){
           var data ={
             name:this.editedItem.name,
             description:this.editedItem.description,
@@ -291,7 +296,9 @@ import WorkoutSessionDataService from '../service/workoutsession'
 
           }
           const response = await WorkoutDataService.create(data)
-          console.log("response",response)
+          responseData = response.data
+        this.editedItem.id = responseData.id
+         
         }
         else{
             var updatedData ={

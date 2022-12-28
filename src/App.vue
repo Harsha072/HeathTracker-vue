@@ -43,6 +43,7 @@ export default {
   <template>
     <v-app>
       <SideBar v-if="!$route.meta.hideNavbar" />
+      
       <v-main>
         <router-view></router-view>
       </v-main>
@@ -51,11 +52,10 @@ export default {
   
   <script>
   import SideBar from './components/SideBar';
+  
   export default {
     name: 'App',
-    components: {
-      SideBar,
-    },
+    components: {SideBar },
     data: () => ({
       //
     }),

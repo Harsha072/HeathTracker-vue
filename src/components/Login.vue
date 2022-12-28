@@ -98,10 +98,16 @@ export default {
     });
         
       },
-      register() {
+     async register() {
          console.log("register::::::")
          if (this.password == this.confirmPassword) {
             this.isRegister = false;
+            var data = {
+          name: this.username,
+          email: this.email
+           }
+        const response = await UserDataService.create(data)
+        console.log("response", response)
             this.errorMessage = "";
             this.$refs.form.reset();
          }
