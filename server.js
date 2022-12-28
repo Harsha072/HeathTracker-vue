@@ -2,7 +2,7 @@ const express = require("express");
 const proxy = require("express-http-proxy")
 const port = process.env.PORT || 8080;
 const app = express();
-const URL ='https://healthtrackerrest-production-f63f.up.railway.app'
+const URL ='https://healthtrackerrest-production-f63f.up.railway.app/api'
 
 app.use(express.static(__dirname + "/dist/"));
 
