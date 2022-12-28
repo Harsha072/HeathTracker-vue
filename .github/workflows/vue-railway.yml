@@ -16,17 +16,17 @@ jobs:
 
       - name: Install packages
         run: npm install
-      - name: Build
+      - name: npm run Build
         run: npm run build
         
  deploy:
-    name: Railway Deploy
+           name: Railway Deploy
+           runs-on: ubuntu-latest
+           needs: Build
+           steps:
+             - uses: actions/checkout@v3
+             - uses: devtomio/action-railway@v1.1.4
+               name: Deploy to Railway
+               env:
+                 RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     
-    runs-on: ubuntu-latest  
-
-    steps:
-       - uses: actions/checkout@v3
-       - uses: devtomio/action-railway@v1.1.4
-         name: Deploy to Railway
-         env:
-           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
