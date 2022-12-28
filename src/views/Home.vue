@@ -3,33 +3,35 @@
   <v-app :style="{ background: $vuetify.theme.themes.light.background }">
     <SideBarVue />
     <v-layout>
-      <v-flex md8>
+      <v-flex md20>
         <v-app :style="{ background: $vuetify.theme.themes.dark.background }" class="rounded-tr-xl rounded-br-xl">
           <v-container>
+
             <v-row>
+              <v-col class="text-right">
+                <v-btn type="submit" @click="logout" rounded color="teal" dark>
+                  Logout
+                </v-btn>
+              </v-col>
               <v-col cols="12" sm="12">
                 <v-app-bar color="rgba(0,0,0,0)" flat class="mx-8 mb-8 mt-3">
-                  <v-toolbar-title>Welcome to Healthifi </v-toolbar-title>
+                  <v-toolbar-title>Welcome to HealthiMe!</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-app-bar>
               </v-col>
               <v-col cols="12" sm="12">
                 <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n15">
                   <v-list-item three-line>
-                    <v-list-item-content class="pa-10">
-                      <v-list-item-title class="headline mb-1">
-                        Today <span class="teal--text">-10%</span> discount<br>
-                        on lung examinations
-                      </v-list-item-title>
-                      <v-list-item-subtitle>
-                        The package price includes: consultation<br>
-                        of a pulmonologist, spirography, cardiogram <span class="teal--text">></span>
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
+                    <template>
+                    <div class="example">
+                      <apexchart ref="demoChart" width="800" height="200" type="line" :options="lineOptions" :series="series">
+                      </apexchart>
+                      <div>
 
-                    <v-list-item-avatar tile size="150" class="pr-10">
-                      <img src="lungs.png">
-                    </v-list-item-avatar>
+                      </div>
+                    </div>
+                  </template>
+                    
                   </v-list-item>
 
                 </v-card>
@@ -37,24 +39,23 @@
               <v-col cols="12" sm="12">
                 <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n10">
                   <v-app-bar color="rgba(0,0,0,0)" flat class="ma-8">
-                    <h5>Statistics of your health</h5>
+                    <h5>Calories Burnt per Activity</h5>
                     <v-spacer></v-spacer>
-                    <v-btn color="teal" text>2019
-                      <v-icon right>
-                        mdi-chevron-down
-                      </v-icon>
-                    </v-btn>
-                    <v-btn color="teal" rounded dark depressed>Year</v-btn>
-                    <v-btn text>Mounth</v-btn>
+                    
                   </v-app-bar>
                   <template>
-                    <v-sparkline :value="value" color="teal" :smooth="radius || false" :padding="padding"
-                      :line-width="width" :stroke-linecap="lineCap" :fill="fill" :type="type"
-                      :auto-line-width="autoLineWidth" auto-draw></v-sparkline>
+                    <div class="example">
+                      <apexchart ref="demoChart" width="800" height="200" type="bar" :options="chartOptions" :series="series">
+                      </apexchart>
+                      <div>
+
+                      </div>
+                    </div>
                   </template>
+                  <!-- <BarVue></BarVue> -->
                 </v-card>
               </v-col>
-            
+
               <v-col cols="12" sm="6">
                 <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n4" color="teal" dark>
                   <v-list-item three-line>
@@ -63,14 +64,14 @@
                         Total Number of Users <br>
                         <h2 style="text-align: center;">{{ this.totalNumberOfUsers.length }}</h2>
                       </v-list-item-title>
-                     
+                       <router-link to="/userNotes">Note</router-link>
 
                     </v-list-item-content>
 
 
                   </v-list-item>
 
-                </v-card> 
+                </v-card>
 
               </v-col>
               <v-col cols="12" md="6">
@@ -81,8 +82,7 @@
                         Total Number of Activites<br>
                         <h2 style="text-align: center;">{{ this.totalNumberOfActivity.length }}</h2>
                       </v-list-item-title>
-                      <button type="submit" @click="logout">hello</button>
-                     
+
 
 
                     </v-list-item-content>
@@ -102,7 +102,7 @@
                         Total Number of WorkoutSessions<br>
                         <h2 style="text-align: center;">{{ this.totalNumberOfSessions.length }}</h2>
                       </v-list-item-title>
-                     
+
 
 
                     </v-list-item-content>
@@ -114,10 +114,6 @@
                 </v-card>
 
               </v-col>
-
-            </v-row>
-            <br><br>
-            <v-row>
               <v-col cols="12" sm="6">
                 <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n4" color="teal" dark>
                   <v-list-item three-line>
@@ -126,7 +122,7 @@
                         Total Number of Workouts <br>
                         <h2 style="text-align: center;">{{ this.totalNumberOfWorkout.length }}</h2>
                       </v-list-item-title>
-                      
+
 
 
                     </v-list-item-content>
@@ -137,32 +133,20 @@
 
                 </v-card>
               </v-col>
+
             </v-row>
+            <br><br>
+            
           </v-container>
         </v-app>
       </v-flex>
-      <v-flex md4>
+      <!-- <v-flex md4>
         <v-app :style="{ background: $vuetify.theme.themes.light.background }">
           <v-container>
             <v-row>
-              <v-col cols="12" sm="12">
-                <v-list two-line>
-
-                  <v-list-item>
-                    <v-list-item-avatar>
-                      <img src="https://cdn.vuetifyjs.com/images/lists/3.jpg">
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title>Anastasia Turner</v-list-item-title>
-                      <v-list-item-subtitle class="teal--text">35 years, Houston</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-spacer></v-spacer>
-                    <v-icon color="teal">mdi-menu</v-icon>
-                  </v-list-item>
-                </v-list>
-              </v-col>
+              
                     
-              <v-col cols="12" sm="12">
+               <v-col cols="12" sm="12">
                 <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n12">
 
                   <v-app-bar color="rgba(0,0,0,0)" flat class="ma-8">
@@ -184,11 +168,11 @@
                     80
                   </v-progress-circular>
                 </v-card>
-              </v-col>
+              </v-col> 
             </v-row>
           </v-container>
         </v-app>
-      </v-flex>
+      </v-flex> -->
 
     </v-layout>
   </v-app>
@@ -200,9 +184,15 @@ import WorkoutDataService from '../service/workouts'
 import WorkoutSessionDataService from '../service/workoutsession';
 import SideBarVue from '../components/SideBar.vue';
 
+
 export default {
   data: () => ({
     width: 2,
+    activity:[],
+    calories:[],
+    workoutName:[],
+    duration:[],
+    data:[],
     radius: 10,
     padding: 8,
     lineCap: "round",
@@ -213,9 +203,91 @@ export default {
     totalNumberOfUsers: [],
     totalNumberOfActivity: [],
     totalNumberOfWorkout: [],
-    totalNumberOfSessions: []
+    totalNumberOfSessions: [],
+    chartOptions: {
+      plotOptions: {
+        bar: {
+          
+        }
+      },
+      xaxis: {
+        categories: []
+      }
+    },
+    lineOptions: {
+     
+      xaxis: {
+        categories: []
+      },
+      
+    },
+    series: [{
+      name: 'series-1',
+      data: []
+    }],
   }),
+  created() {
+    console.log("created")
+    this.fillChartOptions()
+  },
   methods: {
+   async fillChartOptions(){
+     
+      await ActivityDataService.getAllUserActivity(localStorage.getItem("id")).then(response => {
+        response.data.forEach(element => {
+          console.log("tghe ",typeof element.description)
+           this.activity.push(element.description)
+           this.calories.push(element.calories)
+           this.data.push(element.duration)
+        });
+      
+       
+      })
+          .catch(e => {
+            console.log(e);
+          });
+
+          await WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id")).then(response => {
+        response.data.forEach(session => {
+            console.log(session)
+            const startetime = new Date(session.started).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+            const endtime = new Date(session.ended).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+              
+             this.workoutName.push(startetime)
+             console.log("start ",startetime)
+             this.duration.push(endtime)
+             console.log("end ",endtime)
+        });
+       
+       
+      })
+          .catch(e => {
+            console.log(e);
+          });
+  
+      this.chartOptions = {...this.chartOptions, ...{
+    xaxis: {
+       categories:this.activity
+        },
+        series:[{
+          name:'Calories',
+          data:this.calories
+        }]
+    }
+}
+this.lineOptions = {...this.lineOptions, ...{
+    xaxis: {
+       categories:this.workoutName
+        },
+        series:[{
+          name:'Duration',
+          data:this.duration
+        }],
+        
+    }
+}
+    },
+
     async getAllUsers() {
       console.log("dghhhhhgf", localStorage.getItem("id"))
       try {
@@ -229,16 +301,16 @@ export default {
     async getAllActivity() {
       try {
 
-        const response = await ActivityDataService.getAll();
+        const response = await ActivityDataService.getAllUserActivity(localStorage.getItem("id"));
         this.totalNumberOfActivity = response.data;
-        console.log("activity ", this.totalNumberOfActivity.length);
+       
       } catch (e) {
         console.log(e);
       }
     },
     async getAllWorkout() {
       try {
-        const response = await WorkoutDataService.getAll();
+        const response = await WorkoutDataService.getAllUserWorkout(localStorage.getItem("id"));
         this.totalNumberOfWorkout = response.data;
         console.log(this.totalNumberOfUsers.length);
       } catch (e) {
@@ -247,9 +319,10 @@ export default {
     },
     async getAllWorkoutSession() {
       try {
-        const response = await WorkoutSessionDataService.getAll();
+        const response = await WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id"));
+
         this.totalNumberOfSessions = response.data;
-        console.log(this.totalNumberOfSessions.length);
+        console.log("session", this.totalNumberOfSessions.length);
       } catch (e) {
         console.log(e);
       }
@@ -263,10 +336,11 @@ export default {
 
   },
   mounted() {
+  
     this.getAllUsers()
     this.getAllActivity()
     this.getAllWorkout()
-
+    this.getAllWorkoutSession()
   },
 
   computed: {
@@ -274,7 +348,9 @@ export default {
       return this.$vuetify.theme.dark ? "dark" : "light";
     }
   },
-  components: { SideBarVue }
+  components: {
+    SideBarVue
+  }
 
 };
 </script>

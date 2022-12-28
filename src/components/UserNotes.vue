@@ -8,7 +8,7 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Activity
+              New Note
             </v-btn>
           </template>
           <v-card>
@@ -18,18 +18,13 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.description" label="Name"></v-text-field>
+                <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.duration" label="Duration (in min)"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                  </v-col>
-
-                </v-row>
+                  <v-card color="yellow" class="ma-2" sticky>
+                    <v-textarea v-model="editedItem.noteText" placeholder="Enter your note here"></v-textarea>
+                  </v-card>
+                
               </v-container>
             </v-card-text>
 
@@ -59,7 +54,7 @@
     </template>
     <template v-slot:item.actions="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">
-        mdi-pencil
+        fas fa-eye
       </v-icon>
       <v-icon small @click="deleteItem(item)">
         mdi-delete
@@ -74,47 +69,46 @@
 </template>
 <script>
 
-import ActivityDataService from '../service/activities'
+import UsrNotesDataService from '../service/notes'
 export default {
-
+  
   data: () => ({
     dialog: false,
     dialogDelete: false,
-    title: 'Activity',
+    title: 'Notes',
+    // note: '',
     headers: [
       {
-        text: 'Description',
+        text: 'Title',
         align: 'start',
         sortable: false,
-        value: 'description',
+        value: 'title',
       },
-      { text: 'Duration (in minutes)', value: 'duration' },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Time', value: 'started' },
+      { text: 'Text', value: 'noteText' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     desserts: [],
     editedIndex: -1,
     editedItem: {
-      id:"",
-      description: '',
-      duration: '',
-      calories: '',
-      started:'',
+      id: "",
+      title: '',
+       noteText: '',
+       shared: '',
+      userId: '',
 
     },
     defaultItem: {
-   id:"",
-      description: '',
-      duration: '',
-      calories: '',
-      started:'',
-    },
+      id: "",
+      title: '',
+       noteText: '',
+       shared: '',
+      userId: '',
+        },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'New Activity' : 'Edit Activity'
+      return this.editedIndex === -1 ? 'New Note' : 'Edit Note'
     },
   },
 
@@ -133,25 +127,17 @@ export default {
 
   methods: {
     initialize() {
-      ActivityDataService.getAllUserActivity(localStorage.getItem("id")).then(response => {
+         UsrNotesDataService.getAllUserNotes(localStorage.getItem("id")).then(response => {
         
         this.desserts = response.data
-        console.log("the resaponse", response.data)
-        this.desserts.forEach(element => {
-          const time = new Date(element.started).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-          const date = new Date(element.started).toISOString().split('T')
-          console.log(date[0])
-          element.started = date[0]+" "+time
-          console.log("new element",element)
-        });
+       
 
       })
         .catch(e => {
           console.log(e);
         });
-      // this.desserts = [
-
-      // ]
+    
+    
     },
 
     editItem(item) {
@@ -168,7 +154,7 @@ export default {
     },
 
     async deleteItemConfirm() {
-      const response = await ActivityDataService.delete(this.editedItem.id);
+      const response = await UsrNotesDataService.delete(this.editedItem.id);
       console.log(response)
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
@@ -189,50 +175,43 @@ export default {
         this.editedIndex = -1
       })
     },
-
     async save() {
-      var responseData =[]
-      var today = new Date(Date.now()).toISOString()
-      const myDate = today
-      const time = new Date(myDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-      const date = new Date(today).toISOString().split('T')
-          console.log("my date in saving and update ",date[0])
-      console.log("my time in saving",time)
-      if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id=='') {
+   
+      console.log("saved note ",this.note)
+     
+      if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id == '') {
         console.log("edited item while saving", this.editedItem)
         var data = {
-          description: this.editedItem.description,
-          duration: this.editedItem.duration,
-          calories: this.editedItem.calories,
-          started:today,
-          userId:localStorage.getItem("id")
+          title: this.editedItem.title,
+          noteText: this.editedItem.noteText,
+          shared:'true',
+          userId: localStorage.getItem("id")
         }
-        
-        this.editedItem.started=date[0]+" "+time
-         const response = await ActivityDataService.create(data)
-         responseData = response.data
-        this.editedItem.id = responseData.id
+        const response = await UsrNotesDataService.create(data)
+        console.log("note response",response)
+        this.editedItem.id=response.data.id
+        console.log("id ",this.editedItem.id)
       }
       else {
         console.log(" while updating::::", this.editedItem)
         var updatedData = {
           id:this.editedItem.id,
-          description: this.editedItem.description,
-          duration: this.editedItem.duration,
-          calories: this.editedItem.calories,
-          started:today,
-          userId:localStorage.getItem("id")
+          title: this.editedItem.title,
+          noteText: this.editedItem.noteText,
+          shared:'true',
+          userId: localStorage.getItem("id")
 
 
         }
-        this.editedItem.started=date[0]+" "+time
+       
         try {
-          const response = await ActivityDataService.update(this.editedItem.id, updatedData);
+          const response = await UsrNotesDataService.update(this.editedItem.id, updatedData);
           console.log(response)
         } catch (e) {
           console.log(e);
         }
       }
+      
 
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -241,25 +220,13 @@ export default {
       }
       this.close()
     },
-    async update() {
-
-      try {
-        const response = ActivityDataService.update(this.editedItem);
-        console.log(response)
-      } catch (e) {
-        console.log(e);
-      }
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
-      }
-      this.close()
-    }
+    
   },
 }
 </script>
-<style scoped>
-
+<style>
+.v-card {
+  position: sticky;
+  top: 20px;
+}
 </style>
-    
