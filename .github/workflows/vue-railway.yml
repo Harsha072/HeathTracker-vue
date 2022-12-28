@@ -15,7 +15,7 @@ jobs:
           node-version: 16.x
 
       - name: Install packages
-        run: npm clean install
+        run: npm ci
       - name: npm run Build
         run: npm run build
         
