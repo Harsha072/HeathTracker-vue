@@ -3,36 +3,36 @@ import http from "../http-common";
 class ActivityDataService {
     getAll() {
        
-      return http.get("/activities");
+      return http.get("/api/activites");
     }
     getAllUserActivity(id) {
        
-      return http.get(`/users/${id}/activities`);
+      return http.get(`/api/users/${id}/activities`);
     }
     deleteUserActivity(id) {
        
-      return http.delete(`/users/${id}/activities`);
+      return http.delete(`/api/users/${id}/activities`);
     }
   
   
     get(id) {
-      return http.get(`/activities/${id}`);
+      return http.get(`/api/activites/${id}`);
     }
   
     create(data) {
       console.log(data)
-      return http.post("/activities", data);
+      return http.post("/api/activites", data);
     }
   
     update(id, data) {
      
       console.log("id ",id+"  "+" data "+data)
-      return http.patch(`/activities/${id}`, data);
+      return http.patch(`/api/activites/${id}`, data);
     }
   
     delete(id) {
       console.log("delete id ",id)
-      return http.delete(`/activities/${id}`);
+      return http.delete(`/api/activites/${id}`);
     }
   
     findById(id) {

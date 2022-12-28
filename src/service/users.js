@@ -3,34 +3,34 @@ import http from "../http-common";
 class UserDataService {
     getAll() {
         console.log()
-      return http.get("/users");
+      return http.get("/api/users");
     }
   
     get(id) {
-      return http.get(`/users/${id}`);
+      return http.get(`/api/users/${id}`);
     }
   
     create(data) {
       console.log(data)
-      return http.post("/users", data);
+      return http.post("/api/users", data);
     }
   
     update(id, data) {
      
       console.log("id ",id+"  "+" data "+data)
-      return http.patch(`/users/${id}`, data);
+      return http.patch(`/api/users/${id}`, data);
     }
   
     delete(id) {
       console.log("delete id ",id)
-      return http.delete(`/users/${id}`);
+      return http.delete(`/api/users/${id}`);
     }
   
     findById(id) {
-      return http.get(`/users?id=${id}`);
+      return http.get(`/api/users?id=${id}`);
     }
     findByEmail(email) {
-      return http.get(`/users/email/${email}`)
+      return http.get(`/api/users/email/${email}`)
     }
   }
   
