@@ -2,7 +2,7 @@
     <nav>
         <v-navigation-drawer v-model="drawer" dark app mini-variant mini-variant-width="70" class="teal">
             <v-list>
-                <v-list-item class="mb-12">
+                <v-list-item router to="/home" class="mb-12">
                     <v-list-item-content>
                         <v-icon class="mb-2" large>fas fa-hand-holding-medical</v-icon>
                        
@@ -81,6 +81,7 @@
                        
                     </v-list-item-content>
                 </v-list-item>
+                
             </v-list>
             <v-list style="position: absolute; bottom:0" class="ml-3" flat>
                 <v-list-item router to="/about">

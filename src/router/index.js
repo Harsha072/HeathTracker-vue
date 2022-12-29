@@ -12,6 +12,7 @@ const routes = [
     component: Login,
     meta: {
       hideNavbar: true,
+      hideLogout:true
      }
   },
   {

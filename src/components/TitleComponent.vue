@@ -1,24 +1,21 @@
 <template>
-    <div>
+    <div class="myclass">
       <v-toolbar
         dark
-        prominent
-        src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+        color="darken': #00796b"
       >
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  
-        <v-toolbar-title>Vuetify</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-title  >Healthy Me !!</v-toolbar-title>
   
         <v-spacer></v-spacer>
-        <v-col class="text-right">
+      
+       
+      </v-toolbar>
+      <v-col v-if="!$route.meta.hideLogout" class="text-right">
                 <v-btn type="submit" @click="logout" rounded color="teal" dark>
                   Logout
                 </v-btn>
               </v-col>
-        <!-- <v-btn icon>
-          <v-icon>mdi-export</v-icon>
-        </v-btn> -->
-      </v-toolbar>
     </div>
   </template>
   <script>
@@ -33,3 +30,9 @@
     }
 
 </script>
+<style scoped>
+.myclass {
+  font-family: 'Mansalva', cursive; 
+  text-align: center;
+}
+</style>
