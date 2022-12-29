@@ -5,7 +5,7 @@
                 <v-list-item router to="/home" class="mb-12">
                     <v-list-item-content>
                         <v-icon class="mb-2" large>fas fa-hand-holding-medical</v-icon>
-                       
+
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -14,19 +14,19 @@
                     <v-list-item-content>
                         <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
-                                <v-icon class="mb-2"  dark v-bind="attrs" v-on="on">
+                                <v-icon class="mb-2" dark v-bind="attrs" v-on="on">
                                     fas fa-home
-                               <!-- fas fa-sticky-note -->
+                                    <!-- fas fa-sticky-note -->
                                 </v-icon>
                             </template>
                             <span>Home</span>
                         </v-tooltip>
-                      
+
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item router to="/activityList">
                     <v-list-item-content>
-                    <v-tooltip right>
+                        <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon dark v-bind="attrs" v-on="on">fa-solid fa-shoe-prints</v-icon>
                             </template>
@@ -34,10 +34,10 @@
                         </v-tooltip>
                     </v-list-item-content>
                 </v-list-item>
-        
+
                 <v-list-item router to="/workoutList">
-                <v-list-item-content>
-                    <v-tooltip right>
+                    <v-list-item-content>
+                        <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon class="mb-2" dark v-bind="attrs" v-on="on">fas fa-solid fa-dumbbell</v-icon>
                             </template>
@@ -46,7 +46,7 @@
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item router to="/workoutSessionList">
-                    
+
                     <v-list-item-content>
                         <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
@@ -54,11 +54,11 @@
                             </template>
                             <span>Workout Session</span>
                         </v-tooltip>
-                       
+
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item router to="/userNotes">
-                    
+
                     <v-list-item-content>
                         <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
@@ -66,11 +66,11 @@
                             </template>
                             <span>Sticky Note</span>
                         </v-tooltip>
-                       
+
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item router to="/userList">
-                    
+
                     <v-list-item-content>
                         <v-tooltip right>
                             <template v-slot:activator="{ on, attrs }">
@@ -78,10 +78,10 @@
                             </template>
                             <span>User Details</span>
                         </v-tooltip>
-                       
+
                     </v-list-item-content>
                 </v-list-item>
-                
+
             </v-list>
             <v-list style="position: absolute; bottom:0" class="ml-3" flat>
                 <v-list-item router to="/about">

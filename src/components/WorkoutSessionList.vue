@@ -20,7 +20,7 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6">
-                    <!-- <v-select :items="workoutname" label="Workout Name*"  v-model="selectedWorkout" required></v-select> -->
+
                     <v-select v-model="select" :items="workoutname" item-text="name" item-value="id" label="Workout"
                       return-object single-line></v-select>
                   </v-col>
@@ -163,12 +163,11 @@ export default {
 
   methods: {
 
-  async  initialize() {
-     await WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id")).then(response => {
-        console.log("local ", localStorage.getItem("id"))
+    async initialize() {
+      await WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id")).then(response => {
 
         response.data.forEach(session => {
-          console.log("in session", session)
+
           WorkoutDataService.getAll().then(response => {
             response.data.forEach(workout => {
               if (session.workoutId == workout.id) {
@@ -191,7 +190,7 @@ export default {
               }
             });
             this.desserts.push(this.data)
-            console.log("in workout ", this.desserts)
+
 
           }).catch(e => {
             console.log(e);
@@ -202,7 +201,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-     await WorkoutDataService.getAll().then(response => {
+      await WorkoutDataService.getAll().then(response => {
         response.data.forEach(element => {
           var item = { id: element.id, name: element.name }
           this.workoutname.push(item)
@@ -218,7 +217,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      console.log("edited item", this.editedItem)
+
       this.dialog = true
     },
 
@@ -229,7 +228,7 @@ export default {
     },
 
     async deleteItemConfirm() {
-      console.log("this edited item::", this.editedItem.id)
+
       const response = await WorkoutSessionDataService.delete(this.editedItem.id);
       console.log(response)
       this.desserts.splice(this.editedIndex, 1)
@@ -257,11 +256,9 @@ export default {
       const myDate = today
       const time = new Date(myDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
       const date = new Date(today).toISOString().split('T')
-      console.log("save out edit ", this.editedItem)
-      console.log("edit", this.desserts)
-      console.log(today)
+
       if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id == '') {
-        console.log("save  injhljlk edit ", this.editedItem)
+
         var data = {
           started: today,
           ended: today,
@@ -278,27 +275,24 @@ export default {
         this.editedItem.workoutId = this.select.id
         this.editedItem.workoutname = this.select.name
         this.editedItem.userId = localStorage.getItem("id")
-
-        console.log("save data", data)
-        console.log("save item", this.editedItem)
         const response = await WorkoutSessionDataService.create(data)
         this.editedItem.id = response.data.id
 
         if (this.editedIndex > -1) {
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
-          console.log("after", data)
+
           this.desserts.push(this.editedItem)
         }
         this.close()
       }
       else {
-        console.log("savce else edit started ", this.editedItem.started)
+
         var arr = this.editedItem.started.replace("AM", ':00')
-        console.log("arr", arr)
-        // let date = '2022-12-26 5:43:00'; //12 January 2016
+
+
         let parsedDate = moment(arr, 'YYYY.MM.DD H:mm:ss')
-        console.log("parsed:::: ", parsedDate.toISOString());
+
         var updatedData = {
           started: parsedDate.toISOString(),
           ended: today,
@@ -314,8 +308,7 @@ export default {
         this.editedItem.workoutId = this.select.id
         this.editedItem.workoutname = this.select.name
         this.editedItem.userId = localStorage.getItem("id")
-        console.log(updatedData)
-        console.log("workout name", this.select.name)
+
         try {
 
           const response = await WorkoutSessionDataService.update(this.editedItem.id, updatedData);
@@ -324,11 +317,11 @@ export default {
           console.log(e);
         }
         if (this.editedIndex > -1) {
-          console.log("done edit", this.editedItem)
+
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
 
-          console.log("done edit else", this.editedItem)
+
           this.desserts.push(this.editedItem)
         }
         this.close()
@@ -336,21 +329,7 @@ export default {
 
 
     },
-    async update() {
-      console.log("on", this.editedItem)
-      // try {
-      //   const response = WorkoutDataService.update(this.editedItem);
-      //   console.log(response)
-      // } catch (e) {
-      //   console.log(e);
-      // }
-      // if (this.editedIndex > -1) {
-      //   Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      // } else {
-      //   this.desserts.push(this.editedItem)
-      // }
-      // this.close()
-    }
+
   },
 }
 </script>

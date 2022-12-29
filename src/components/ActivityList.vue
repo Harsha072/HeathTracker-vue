@@ -96,19 +96,19 @@ export default {
     desserts: [],
     editedIndex: -1,
     editedItem: {
-      id:"",
+      id: "",
       description: '',
       duration: '',
       calories: '',
-      started:'',
+      started: '',
 
     },
     defaultItem: {
-   id:"",
+      id: "",
       description: '',
       duration: '',
       calories: '',
-      started:'',
+      started: '',
     },
   }),
 
@@ -134,15 +134,15 @@ export default {
   methods: {
     initialize() {
       ActivityDataService.getAllUserActivity(localStorage.getItem("id")).then(response => {
-        
+
         this.desserts = response.data
-        console.log("the resaponse", response.data)
+
         this.desserts.forEach(element => {
           const time = new Date(element.started).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
           const date = new Date(element.started).toISOString().split('T')
           console.log(date[0])
-          element.started = date[0]+" "+time
-          console.log("new element",element)
+          element.started = date[0] + " " + time
+
         });
 
       })
@@ -157,7 +157,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      console.log("edited item", this.editedItem)
+
       this.dialog = true
     },
 
@@ -191,41 +191,40 @@ export default {
     },
 
     async save() {
-      var responseData =[]
+      var responseData = []
       var today = new Date(Date.now()).toISOString()
       const myDate = today
       const time = new Date(myDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
       const date = new Date(today).toISOString().split('T')
-          console.log("my date in saving and update ",date[0])
-      console.log("my time in saving",time)
-      if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id=='') {
-        console.log("edited item while saving", this.editedItem)
+
+      if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id == '') {
+
         var data = {
           description: this.editedItem.description,
           duration: this.editedItem.duration,
           calories: this.editedItem.calories,
-          started:today,
-          userId:localStorage.getItem("id")
+          started: today,
+          userId: localStorage.getItem("id")
         }
-        
-        this.editedItem.started=date[0]+" "+time
-         const response = await ActivityDataService.create(data)
-         responseData = response.data
+
+        this.editedItem.started = date[0] + " " + time
+        const response = await ActivityDataService.create(data)
+        responseData = response.data
         this.editedItem.id = responseData.id
       }
       else {
-        console.log(" while updating::::", this.editedItem)
+
         var updatedData = {
-          id:this.editedItem.id,
+          id: this.editedItem.id,
           description: this.editedItem.description,
           duration: this.editedItem.duration,
           calories: this.editedItem.calories,
-          started:today,
-          userId:localStorage.getItem("id")
+          started: today,
+          userId: localStorage.getItem("id")
 
 
         }
-        this.editedItem.started=date[0]+" "+time
+        this.editedItem.started = date[0] + " " + time
         try {
           const response = await ActivityDataService.update(this.editedItem.id, updatedData);
           console.log(response)

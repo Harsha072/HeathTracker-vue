@@ -2,9 +2,9 @@
    <v-app>
       <v-main>
          <v-container fluid fill-height>
-           
+
             <v-layout align-center justify-center>
-               
+
                <v-flex xs12 sm8 md4>
                   <v-card class="elevation-12">
                      <v-toolbar dark color="primary">
@@ -19,7 +19,7 @@
                            <v-card-actions>
                               <v-spacer></v-spacer>
                               <v-btn color="blue darken-1" text @click="close">Ok</v-btn>
-                              <!-- <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>  -->
+
                               <v-spacer></v-spacer>
                            </v-card-actions>
                         </v-card>
@@ -84,14 +84,13 @@ export default {
    },
    methods: {
       async login() {
-         console.log("loginnn", this)
+
          const { username } = this
          var email = this.email
          await UserDataService.findByEmail(email).then(response => {
-            console.log("respinse ", response.statusText)
-            console.log("sdfsdg", response.status)
+
             this.userId = response.data.id
-            localStorage.setItem("id", this.userId)
+
             this.$router.replace({ name: "Home", params: { username: username } });
          })
             .catch(error => {
@@ -103,15 +102,15 @@ export default {
 
       },
       async register() {
-         console.log("register::::::")
+
          if (this.password == this.confirmPassword) {
             this.isRegister = false;
             var data = {
                name: this.username,
                email: this.email
             }
-            const response = await UserDataService.create(data)
-            console.log("response", response)
+             await UserDataService.create(data)
+
             this.errorMessage = "";
             this.$refs.form.reset();
          }

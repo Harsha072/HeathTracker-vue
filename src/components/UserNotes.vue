@@ -19,12 +19,12 @@
             <v-card-text>
               <v-container>
                 <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
-                  </v-col>
-                  <v-card color="yellow" class="ma-2" sticky>
-                    <v-textarea v-model="editedItem.noteText" placeholder="Enter your note here"></v-textarea>
-                  </v-card>
-                
+                  <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
+                </v-col>
+                <v-card color="yellow" class="ma-2" sticky>
+                  <v-textarea v-model="editedItem.noteText" placeholder="Enter your note here"></v-textarea>
+                </v-card>
+
               </v-container>
             </v-card-text>
 
@@ -71,7 +71,7 @@
 
 import UsrNotesDataService from '../service/notes'
 export default {
-  
+
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -92,18 +92,18 @@ export default {
     editedItem: {
       id: "",
       title: '',
-       noteText: '',
-       shared: '',
+      noteText: '',
+      shared: '',
       userId: '',
 
     },
     defaultItem: {
       id: "",
       title: '',
-       noteText: '',
-       shared: '',
+      noteText: '',
+      shared: '',
       userId: '',
-        },
+    },
   }),
 
   computed: {
@@ -127,23 +127,23 @@ export default {
 
   methods: {
     initialize() {
-         UsrNotesDataService.getAllUserNotes(localStorage.getItem("id")).then(response => {
-        
+      UsrNotesDataService.getAllUserNotes(localStorage.getItem("id")).then(response => {
+
         this.desserts = response.data
-       
+
 
       })
         .catch(e => {
           console.log(e);
         });
-    
-    
+
+
     },
 
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      console.log("edited item", this.editedItem)
+
       this.dialog = true
     },
 
@@ -176,34 +176,34 @@ export default {
       })
     },
     async save() {
-   
-      console.log("saved note ",this.note)
-     
+
+      console.log("saved note ", this.note)
+
       if (typeof (this.editedItem.id) == 'undefined' || this.editedItem.id == '') {
-        console.log("edited item while saving", this.editedItem)
+
         var data = {
           title: this.editedItem.title,
           noteText: this.editedItem.noteText,
-          shared:'true',
+          shared: 'true',
           userId: localStorage.getItem("id")
         }
         const response = await UsrNotesDataService.create(data)
-        console.log("note response",response)
-        this.editedItem.id=response.data.id
-        console.log("id ",this.editedItem.id)
+
+        this.editedItem.id = response.data.id
+
       }
       else {
-        console.log(" while updating::::", this.editedItem)
+
         var updatedData = {
-          id:this.editedItem.id,
+          id: this.editedItem.id,
           title: this.editedItem.title,
           noteText: this.editedItem.noteText,
-          shared:'true',
+          shared: 'true',
           userId: localStorage.getItem("id")
 
 
         }
-       
+
         try {
           const response = await UsrNotesDataService.update(this.editedItem.id, updatedData);
           console.log(response)
@@ -211,7 +211,7 @@ export default {
           console.log(e);
         }
       }
-      
+
 
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -220,7 +220,7 @@ export default {
       }
       this.close()
     },
-    
+
   },
 }
 </script>
