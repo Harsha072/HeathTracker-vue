@@ -16,6 +16,7 @@
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon class="mb-2"  dark v-bind="attrs" v-on="on">
                                     fas fa-home
+                               <!-- fas fa-sticky-note -->
                                 </v-icon>
                             </template>
                             <span>Home</span>
@@ -52,6 +53,30 @@
                                 <v-icon class="mb-2" dark v-bind="attrs" v-on="on">fas fa-cog</v-icon>
                             </template>
                             <span>Workout Session</span>
+                        </v-tooltip>
+                       
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item router to="/userNotes">
+                    
+                    <v-list-item-content>
+                        <v-tooltip right>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon class="mb-2" dark v-bind="attrs" v-on="on">fas fa-sticky-note</v-icon>
+                            </template>
+                            <span>Sticky Note</span>
+                        </v-tooltip>
+                       
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item router to="/userList">
+                    
+                    <v-list-item-content>
+                        <v-tooltip right>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon class="mb-2" dark v-bind="attrs" v-on="on">fas fa-solid fa-user</v-icon>
+                            </template>
+                            <span>User Details</span>
                         </v-tooltip>
                        
                     </v-list-item-content>

@@ -3,33 +3,33 @@ import http from "../http-common";
 class WorkoutSessionDataService {
     getAll() {
         console.log()
-      return http.get("/workoutSession");
+      return http.get("/api/workoutSession");
     }
 
     getAllUserWorkoutSession(id) {
         
-      return http.get(`users/${id}/workoutSession`);
+      return http.get(`/api/users/${id}/workoutSession`);
   }
 
   
     get(id) {
-      return http.get(`/workout/${id}`);
+      return http.get(`/api/workoutSession/${id}`);
     }
   
     create(data) {
       console.log(data)
-      return http.post("/workoutSession", data);
+      return http.post("/api/workoutSession", data);
     }
   
     update(id, data) {
      
       console.log("id ",id+"  "+" data "+data)
-      return http.patch(`/workoutSession/${id}`, data);
+      return http.patch(`/api/workoutSession/${id}`, data);
     }
   
     delete(id) {
       console.log("delete id ",id)
-      return http.delete(`/workoutSession/${id}`);
+      return http.delete(`/api/workoutSession/${id}`);
     }
   
     findById(id) {

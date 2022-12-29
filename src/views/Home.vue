@@ -1,30 +1,30 @@
 <template>
 
-  <v-app :style="{ background: $vuetify.theme.themes.light.background }">
+  <v-app :style="{ background: $vuetify.theme.themes.dark.background }">
     <SideBarVue />
     <v-layout>
-      <v-flex md20>
-        <v-app :style="{ background: $vuetify.theme.themes.dark.background }" class="rounded-tr-xl rounded-br-xl">
+      <v-flex md30>
           <v-container>
 
             <v-row>
-              <v-col class="text-right">
-                <v-btn type="submit" @click="logout" rounded color="teal" dark>
-                  Logout
-                </v-btn>
-              </v-col>
-              <v-col cols="12" sm="12">
+            
+              <!-- <v-col cols="12" sm="12">
                 <v-app-bar color="rgba(0,0,0,0)" flat class="mx-8 mb-8 mt-3">
                   <v-toolbar-title>Welcome to HealthiMe!</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-app-bar>
-              </v-col>
+              </v-col> -->
               <v-col cols="12" sm="12">
-                <v-card class="mx-12 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n15">
+                <v-card class="mx-20 rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl mt-n10">
+                  <v-app-bar color="rgba(0,0,0,0)" flat class="ma-8">
+                    <h5>Calories Burnt each session day</h5>
+                    <v-spacer></v-spacer>
+                    
+                  </v-app-bar>
                   <v-list-item three-line>
                     <template>
                     <div class="example">
-                      <apexchart ref="demoChart" width="800" height="200" type="line" :options="lineOptions" :series="series">
+                      <apexchart ref="demoChart" width="800" height="500" type="bar" :options="lineOptions" :series="series">
                       </apexchart>
                       <div>
 
@@ -45,7 +45,7 @@
                   </v-app-bar>
                   <template>
                     <div class="example">
-                      <apexchart ref="demoChart" width="800" height="200" type="bar" :options="chartOptions" :series="series">
+                      <apexchart ref="demoChart" width="800" height="500" type="bar" :options="chartOptions" :series="series">
                       </apexchart>
                       <div>
 
@@ -64,7 +64,7 @@
                         Total Number of Users <br>
                         <h2 style="text-align: center;">{{ this.totalNumberOfUsers.length }}</h2>
                       </v-list-item-title>
-                       <router-link to="/userNotes">Note</router-link>
+                    
 
                     </v-list-item-content>
 
@@ -138,7 +138,7 @@
             <br><br>
             
           </v-container>
-        </v-app>
+      
       </v-flex>
       <!-- <v-flex md4>
         <v-app :style="{ background: $vuetify.theme.themes.light.background }">
@@ -183,7 +183,7 @@ import ActivityDataService from '../service/activities'
 import WorkoutDataService from '../service/workouts'
 import WorkoutSessionDataService from '../service/workoutsession';
 import SideBarVue from '../components/SideBar.vue';
-
+import moment from 'moment'
 
 export default {
   data: () => ({
@@ -217,6 +217,7 @@ export default {
     lineOptions: {
      
       xaxis: {
+        name:"",
         categories: []
       },
       
@@ -250,12 +251,12 @@ export default {
           await WorkoutSessionDataService.getAllUserWorkoutSession(localStorage.getItem("id")).then(response => {
         response.data.forEach(session => {
             console.log(session)
-            const startetime = new Date(session.started).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+            // const startetime = new Date(session.started).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
             const endtime = new Date(session.ended).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-              
-             this.workoutName.push(startetime)
-             console.log("start ",startetime)
-             this.duration.push(endtime)
+            const endmonth = new Date(session.ended)
+             this.workoutName.push(endtime+" "+moment(endmonth).format('ddd'))
+             console.log("start ",moment(endmonth).format('MMM'))
+             this.duration.push(session.totalCalories)
              console.log("end ",endtime)
         });
        
@@ -327,10 +328,7 @@ this.lineOptions = {...this.lineOptions, ...{
         console.log(e);
       }
     },
-    logout() {
-      localStorage.clear()
-      this.$router.push({ name: 'login' })
-    }
+   
 
 
 

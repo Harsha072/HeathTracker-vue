@@ -2,7 +2,9 @@
    <v-app>
       <v-main>
          <v-container fluid fill-height>
+           
             <v-layout align-center justify-center>
+               
                <v-flex xs12 sm8 md4>
                   <v-card class="elevation-12">
                      <v-toolbar dark color="primary">
@@ -11,7 +13,9 @@
                      </v-toolbar>
                      <v-dialog v-model="isvalid" max-width="500px">
                         <v-card>
-                           <v-card-title class="text-h5"><h3>Invalid credentials! Please Register</h3></v-card-title>
+                           <v-card-title class="text-h5">
+                              <h3>Invalid credentials! Please Register</h3>
+                           </v-card-title>
                            <v-card-actions>
                               <v-spacer></v-spacer>
                               <v-btn color="blue darken-1" text @click="close">Ok</v-btn>
@@ -35,8 +39,8 @@
                               required></v-text-field>
                            <div class="red--text"> {{ errorMessage }}</div>
                            <v-btn type="submit" class="mt-4" color="primary" value="log in">{{ isRegister ?
-                                 stateObj.register.name : stateObj.login.name
-                           }}</v-btn>
+      stateObj.register.name : stateObj.login.name
+}}</v-btn>
                            <div class="grey--text mt-4" v-on:click="isRegister = !isRegister;">
                               {{ toggleMessage }}
                            </div>
@@ -84,30 +88,30 @@ export default {
          const { username } = this
          var email = this.email
          await UserDataService.findByEmail(email).then(response => {
-        console.log("respinse ",response.statusText)
-         console.log("sdfsdg",response.status)
-         this.userId = response.data.id
-         localStorage.setItem("id", this.userId)
-         this.$router.replace({ name: "Home", params: { username: username } });
-    })
-    .catch(error => {
-      if(error){
-         this.isvalid=true;
-      }
-       
-    });
-        
+            console.log("respinse ", response.statusText)
+            console.log("sdfsdg", response.status)
+            this.userId = response.data.id
+            localStorage.setItem("id", this.userId)
+            this.$router.replace({ name: "Home", params: { username: username } });
+         })
+            .catch(error => {
+               if (error) {
+                  this.isvalid = true;
+               }
+
+            });
+
       },
-     async register() {
+      async register() {
          console.log("register::::::")
          if (this.password == this.confirmPassword) {
             this.isRegister = false;
             var data = {
-          name: this.username,
-          email: this.email
-           }
-        const response = await UserDataService.create(data)
-        console.log("response", response)
+               name: this.username,
+               email: this.email
+            }
+            const response = await UserDataService.create(data)
+            console.log("response", response)
             this.errorMessage = "";
             this.$refs.form.reset();
          }
@@ -116,7 +120,7 @@ export default {
          }
       },
       close() {
-         this.isvalid=false
+         this.isvalid = false
       }
    },
    computed: {
