@@ -146,6 +146,7 @@ export default {
 
   methods: {
     initialize() {
+      console.log("user ::::",localStorage.getItem("id"))
       WorkoutDataService.getAllUserWorkout(localStorage.getItem("id")).then(response => {
         this.desserts = response.data
         console.log("in workout of user ", this.desserts)

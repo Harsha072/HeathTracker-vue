@@ -90,7 +90,7 @@ export default {
          await UserDataService.findByEmail(email).then(response => {
 
             this.userId = response.data.id
-
+             localStorage.setItem("id",this.userId)
             this.$router.replace({ name: "Home", params: { username: username } });
          })
             .catch(error => {
