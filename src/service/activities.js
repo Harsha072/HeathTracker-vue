@@ -21,18 +21,18 @@ class ActivityDataService {
   
     create(data) {
       console.log(data)
-      return http.post("/api/activites", data);
+      return http.post("/api/activities", data);
     }
   
     update(id, data) {
      
       console.log("id ",id+"  "+" data "+data)
-      return http.patch(`/api/activites/${id}`, data);
+      return http.patch(`/api/activities/${id}`, data);
     }
   
     delete(id) {
       console.log("delete id ",id)
-      return http.delete(`/api/activites/${id}`);
+      return http.delete(`/api/activities/${id}`);
     }
   
     findById(id) {
